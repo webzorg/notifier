@@ -28,4 +28,8 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      messages:
+        invalid_format: "is of invalid format"
+        must_be_positive_integer: "must be positive integer"
