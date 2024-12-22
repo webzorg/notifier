@@ -2,7 +2,7 @@
 
 ENV["PORT"] ||= "3000"
 VERBOSE = ARGV.include?("--verbose") || ARGV.include?("-v") || ENV["VERBOSE"]
-RAILS_ARGS = ARGV - [ "--verbose", "-v" ]
+RAILS_ARGS = ARGV - ["--verbose", "-v"]
 PROCFILE = "Procfile.dev"
 Process.exec(*%w[bundle exec rails server], *RAILS_ARGS) unless File.exist?(PROCFILE)
 
