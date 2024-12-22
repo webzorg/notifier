@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :tickets
+
   validates :name, presence: true, length: { maximum: 255 }
   validates :email, presence: true, email: true, length: { maximum: 255 }
   validates :due_date_reminder_offset_in_days, inclusion: { in: 0.., message: :must_be_positive_integer }
