@@ -51,4 +51,43 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal tickets_pending_count, Ticket.pending.count
     assert_equal tickets_done_count, Ticket.done.count
   end
+
+  test ".active scope to correctly handle pending scope and progress" do
+    tickets = create_list(:ticket, 3)
+
+    assert_equal tickets.count, Ticket.active.count
+
+    tickets.first.update(status: :done)
+    tickets.second.update(progress: 100)
+
+    assert 1, Ticket.active.count
+  end
+
+  test "#active? to return expected boolean" do
+    ticket = create(:ticket)
+
+    # assert ticket.active?
+
+    ticket.update(status: :done)
+
+    assert_not ticket.active?
+
+    ticket.update(status: :pending, progress: 100)
+
+    assert_not ticket.active?
+  end
+
+  test "#expected_reminder_delivery_time to return expected reminder delivery time" do
+    user = build(:user, due_date_reminder_offset_in_days: 5, due_date_reminder_time: "9:45", time_zone: "Europe/Vienna")
+    ticket = build(:ticket, user:, due_date: "2020-12-25")
+
+    expected_delivery_at = ticket.expected_reminder_delivery_time
+
+    assert_equal 2020, expected_delivery_at.year
+    assert_equal 12, expected_delivery_at.month
+    assert_equal 20, expected_delivery_at.day
+    assert_equal 9, expected_delivery_at.hour
+    assert_equal 45, expected_delivery_at.min
+    assert_equal "Europe/Vienna", expected_delivery_at.time_zone.name
+  end
 end

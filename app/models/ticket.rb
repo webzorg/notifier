@@ -7,4 +7,19 @@ class Ticket < ApplicationRecord
   validates :progress, inclusion: { in: 0..100, message: :must_be_within_0_to_100 }
   validates :status, presence: true
   validates :due_date, presence: true
+
+  scope :active, -> { pending.where.not(progress: 100) }
+
+  def expected_reminder_delivery_time
+    user.due_date_reminder_time.change(
+      year: due_date.year,
+      month: due_date.month,
+      day: due_date.day - user.due_date_reminder_offset_in_days,
+      zone: user.time_zone
+    )
+  end
+
+  def active?
+    Ticket.active.exists?(id:)
+  end
 end
