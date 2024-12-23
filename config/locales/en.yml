@@ -34,3 +34,6 @@ en:
         invalid_format: "is of invalid format"
         must_be_positive_integer: "must be positive integer"
         must_be_within_0_to_100: "must be within 0 to 100"
+  due_date_reminder_mailer:
+    notify:
+      subject: Ticket due date reminder
