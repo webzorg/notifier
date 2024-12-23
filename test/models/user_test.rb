@@ -87,8 +87,16 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "#due_date_reminder_time_with_time_zone to return due_date_reminder_time with user set time_zone" do
-    user = build(:user, time_zone: "Europe/Vienna")
+    user = build(:user, due_date_reminder_time: "9:45", time_zone: "Europe/Vienna")
 
     assert_equal "Europe/Vienna", user.due_date_reminder_time_with_time_zone.time_zone.name
+    assert_equal 9, user.due_date_reminder_time_with_time_zone.hour
+    assert_equal 45, user.due_date_reminder_time_with_time_zone.min
+  end
+
+  test "#reminder_delivery_methods returns array containing email delivery method" do
+    user = build(:user, time_zone: "Europe/Vienna")
+
+    assert_equal %i[email], user.reminder_delivery_methods
   end
 end
