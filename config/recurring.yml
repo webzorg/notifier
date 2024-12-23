@@ -1,0 +1,10 @@
+default: &default
+  due_date_reminder_dispatcher_job:
+    class: DueDateReminder::DispatcherJob
+    schedule: every day at midnight
+
+development:
+  <<: *default
+
+production:
+  <<: *default
