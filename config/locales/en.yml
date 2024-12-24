@@ -31,9 +31,11 @@ en:
   activerecord:
     errors:
       messages:
-        invalid_format: "is of invalid format"
-        must_be_positive_integer: "must be positive integer"
-        must_be_within_0_to_100: "must be within 0 to 100"
+        invalid_format: is of invalid format
+        must_be_positive_integer: must be positive integer
+        must_be_within_0_to_100: must be within 0 to 100
+        is_not_a_valid_date: is not a valid date
+        must_be_today_or_in_future: must be today or in future
   due_date_reminder_mailer:
     notify:
       subject: Ticket due date reminder

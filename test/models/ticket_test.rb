@@ -40,6 +40,19 @@ class TicketTest < ActiveSupport::TestCase
     end
   end
 
+  test "due_date must be in the future" do
+    ticket = build(:ticket, due_date: Date.today)
+
+    assert ticket.valid?
+
+    ticket.due_date = Date.yesterday
+
+    assert ticket.invalid?
+    assert_equal I18n.t("activerecord.errors.messages.must_be_today_or_in_future"), ticket.errors[:due_date].first
+  end
+
+
+
   test "status enum scopes" do
     tickets_count = 10
     tickets_pending_count = 4
@@ -66,7 +79,7 @@ class TicketTest < ActiveSupport::TestCase
   test "#active? to return expected boolean" do
     ticket = create(:ticket)
 
-    # assert ticket.active?
+    assert ticket.active?
 
     ticket.update(status: :done)
 
